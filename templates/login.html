@@ -2,12 +2,10 @@
 {% block content %}
 
 <h1>Login</h1>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
+{% with message = get_flashed_messages() %}
+  {% if message %}
     <ul class=flashes>
-    {% for message in messages %}
       <li>{{ message }}</li>
-    {% endfor %}
     </ul>
   {% endif %}
 {% endwith %}
@@ -20,5 +18,6 @@
     {% endfor %}
     <button type="submit">Login</button>
 </form>
+<a href="/register">Haven't made an account yet? Register here -></a>
 
 {% endblock %}

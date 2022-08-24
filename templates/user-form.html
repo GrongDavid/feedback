@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>{{user.username}}</h1>
+
+    <ul>
+        <li>First Name: {{user.first_name}}</li>
+        <li>Last Name: {{user.last_name}}</li>
+        <li>Email: {{user.email}}</li>
+    </ul>
+
+    <h2>Feedback</h2>
+
+    <ul>
+        {% for feedback in user.feedback %}
+        <li>
+          {{feedback.title}}
+          <small>{{feedback.content}}</small>
+        </li>
+  
+        <form>
+          {{form.hidden_tag()}}
+          <button formmethod="GET" formaction="/feedback/{{ feedback.id }}/update">Edit</button>
+          <button formmethod="POST" formaction="/feedback/{{ feedback.id }}/delete">Delete</button>
+        </form>
+        {% endfor %}
+      </ul>
+
+      <p>
+        <a href="/users/{{ user.username }}/feedback/new">Add feedback</a>
+      </p>
+  
+      <form>
+        <button formaction="/users/{{ user.username }}/delete" formmethod="POST">Delete user</button>
+      </form>
+  
+    </div>
+  </div>
+  
+  
+
+    <a href="/logout">Logout</a>
+    
+
+
+{% endblock %}

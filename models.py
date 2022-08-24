@@ -18,12 +18,27 @@ class User(db.Model):
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
 
+    feedback = db.relationship('Feedback', backref='user')
+
+class Feedback(db.Model):
+    __tablename__ = "feedback"
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    username = db.Column(
+        db.String(20),
+        db.ForeignKey('users.username'),
+        nullable=False,
+    )
+
     @classmethod
-    def register(cls, username, pwd):
+    def register(cls, username, pwd, email, first_name, last_name):
         hashed = bcrypt.generate_password_hash(pwd)
         hashed_utf8 = hashed.decode("utf8")
 
-        return cls(username=username, password=hashed_utf8)
+        return cls(username=username, password=hashed_utf8, email=email, 
+                    first_name=first_name, last_name=last_name)
   
     @classmethod
     def authenticate(cls, username, pwd):
